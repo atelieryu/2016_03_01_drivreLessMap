@@ -1,0 +1,26 @@
+"code","country","location","text","iso2","lon","lat"
+1,"United States","Mountain View CA","Google tests its driverless cars in urban and highway road conditions. Bosch, Nissan, Mercedes-Benz, VW and Delphi have also tested driverless technology on California roads.","US",-122.0838511,37.3860517
+2,"United States","Ann Arbor MI","Ford tested its driverless cars in the snow in a controlled environment in January 2016.","US",-83.7430378,42.2808256
+3,"United States","Pittsburgh PA","GM-Carnegie Mellon Autonomous Driving Collaborative Research Lab and Uber Advanced Technologies Center conduct autonomous car research.","US",-79.9958864,40.4406248
+4,"Germany","Berlin","University of Berlin - ""MadeinGermany"" autonomous car tests on public roads in Germany, plus autonomous taxi service","DE",13.404954,52.5200066
+5,"Germany","Braunschweig","University of Braunschweig - successfully operated an autonomous Volkswagen Passat in the city of Braunschweig in 2010","DE",10.5267696,52.2688736
+6,"Germany","Karlsruhe","The Karsruhe Institute of Technology cooperated with Daimler in 2013 to have a Mercedes drive autonomously more than 100km through Southern Germany. Also researching autonomous railways.","DE",8.4036527,49.0068901
+7,"Germany","Munich","The Universität der Bundeswehr is developing MuCAR-3, a modified Volkswagen Tourag that can drive itself.","DE",11.5819806,48.1351253
+8,"Italy","Parma","University of Parma - July 2013: BRAiVE prototype successfully navigated rural, urban and freeway traffic in Parma. 2010: university team completed a 13,000 km journey with two autonomous vehicles from Italy to China.","IT",10.3279036,44.801485
+9,"UK","Oxford","Oxford mobile robotics group: Developed the Wildcat autonomous vehicle","GB",-1.2577263,51.7520209
+10,"UK","Greenwich","Paris-based NavyaTechnology is testing a driverless shuttle.","GB",-0.0076589,51.4825766
+11,"France","Paris","A research group here is involved in Cybercars autonomous vehicle projects as well as intelligent transport.","FR",2.3522219,48.856614
+12,"France","Toulouse","Easymile: main product is a driverless shuttle being tested in several European cities as part of the Citymobil2 project, including in Switzerland","FR",1.444209,43.604652
+13,"Australia","Brisbane","Griffith University: Research in cooperative driverless vehicles and an autonomous research platform.","AU",153.0234489,-27.4710107
+14,"Switzerland","Sion","CityMobil2 tests driverless buses in collaboration with BestMile.","CH",7.360626,46.2331221
+15,"Switzerland","Zurich","Swisscom tested the MadeInGermany driverless car on Zurich streets in 2015.","CH",8.541694,47.3768866
+16,"Sweden","Gothenburg","Volvo tested 100 self-driving cars in everyday conditions.","SE",11.97456,57.70887
+17,"Greece","Trikala","CityMobil2 tests driverless buses","GR",21.7678951,39.5557317
+18,"Singapore","singapore","The Singapore-MIT-Alliance for Research and Technology is experimenting with autonomous golf carts.","SG",103.8677444,1.3553794
+19,"India","Chennai","HiTech Robotic Systemz: developed the Novus Drive autonomous shuttle for university campuses","IN",80.2707184,13.0826802
+20,"Korea","Daejeon","Electronics and Telecommunications Research Institute is working on an autonomous vehicle shuttle for outdoor environments","KR",127.3845475,36.3504119
+21,"Finland","Helsinki","CityMobil2 tests driverless buses","FI",24.938379,60.1698557
+22,"Japan","Tokyo","RobotTaxi aims to develop a driverless taxi service and wants to make them available for the 2020 Olympics in Tokyo.","JP",139.6917064,35.6894875
+23,"Japan","Kanagawa Prefecture","Nissan tested an autonomous, all-electric Leaf on an expressway outside of Tokyo in 2013.","JP",139.6423446,35.4475073
+24,"Spain","Barcelona","Volvo and other partners created autonomous cars that can follow a human-driven car and tested them here.","ES",2.1734035,41.3850639
+25,"China","Shanghai","Audi tested driverless car technology here as well as in Germany and the United States.","CN",121.473701,31.230416

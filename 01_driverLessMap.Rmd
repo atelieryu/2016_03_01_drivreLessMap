@@ -1,0 +1,125 @@
+---
+title: "Driverless map"
+author: "Duc-Quang Nguyen"
+date: "01 March 2016"
+output: html_document
+---
+
+```{r, echo = F, warning = F, message = F}
+library(countrycode)
+library(tidyr)
+library(dplyr)
+library(swiTheme)
+library(swiMap)
+library(leaflet)
+library(htmlwidgets)
+library(ggmap)
+library(swiRcharts)
+```
+
+## Settings
+```{r}
+
+geocode <- F
+
+translation.file <- "input/drivelessCarMap - translations.csv"
+data.file <- "input/drivelessCarMap - data.csv"
+
+```
+
+## Load and shape data
+```{r}
+data.read <- read.csv(data.file, stringsAsFactors = F, header = T)
+# get iso2 code
+data.read$iso2 <- countrycode(data.read$country, "country.name", "iso2c")
+data <- data.read
+stopifnot(!any(is.na(data$iso2)))
+
+```
+
+## Geocode
+```{r}
+  if(geocode) {
+	# Geocode every country (concatenate country name with iso2 code)
+	latlon <- geocode(paste(data$location, data$iso2, sep = ", country="), output = c("latlon"), source = "google", messaging = F)
+  stopifnot(!any(is.na(latlon)))
+	data <- cbind(data, latlon)
+
+	write.csv(data, file = "input/data_geocoded.csv", row.names = F)    
+  } else {
+    data <- read.csv( "input/data_geocoded.csv", stringsAsFactors = F)
+  }
+```
+
+## Load translations
+```{r}
+txt <- read.csv(translation.file, stringsAsFactors = F, header = T, row.names = 1)
+
+# check rownames are consistent with the data and get the matching keys
+idx.city <- match(row.names(data), gsub("^city\\.", "", rownames(txt)))
+idx.txt <- match(row.names(data), gsub("^txt\\.", "", rownames(txt)))
+stopifnot(!any(is.na(idx.city)))
+stopifnot(!any(is.na(idx.txt)))
+
+# discard non complete translations
+cidx <- unique(which(txt =="", T)[,2])
+if(length(cidx > 0)) {
+  warning(paste(colnames(txt)[cidx], collapse = "\t"), " languagues will be discarded!", "\n")
+  txt <- txt[,-cidx, drop = F]
+}
+
+```
+
+
+## Map
+```{r}
+
+carIcon <-  makeIcon("car-icon_small.png", "car-icon.png", 25, 25)
+
+
+	fontSize <- "0.9em"
+
+  for (i in 1:ncol(txt)) {
+    dd <- data
+    lang <- colnames(txt)[i]
+    output.html <- paste("drivelessCar_map_", lang, ".html", sep ="")
+    
+    # get language specific translations
+    dd$geo <- countryTranslation(as.character(dd$iso2), toupper(lang))[,2]
+    dd$loc <- txt[idx.city, lang]
+    dd$text <- txt[idx.txt, lang]
+    
+    mb_tiles <- 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+    mb_attribution <- paste0("swissinfo.ch | ", txt['source', lang], " | ", txt['footer', lang], " ",   htmlLink(txt['link.url', lang], txt['link.txt', lang]), 
+                             ' | Tiles &copy; Esri')
+    
+#     mb_tiles2 <- 'http://map1.vis.earthdata.nasa.gov/wmts-webmerc/VIIRS_CityLights_2012/default/{time}/{tilematrixset}{maxZoom}/{z}/{y}/{x}.{format}'
+# 	  mb_attribution2 <- 'Imagery provided by services from the Global Imagery Browse Services (GIBS), operated by the NASA/GSFC/Earth Science Data and Information System (<a href="https://earthdata.nasa.gov">ESDIS</a>) with funding provided by NASA/HQ.'
+      
+      
+    if(lang == 'AR') {
+      topP <- paste0('<div align=\"right\"><strong>', dd$geo, "</strong>", '<br>', dd$loc, '<p dir=\"rtl\" style=\"font-size:', fontSize, '\">')
+    } else {
+      topP <- paste0('<strong>', dd$geo, "</strong>", '<br><div class="small">', dd$loc, '</div><p style=\"font-size:', fontSize, '\">')
+    }
+    popup <- paste0(topP, dd$text, "</p>", ifelse(lang == 'ar', "</div>", ""))
+	
+#      leaflet(data = dd) %>% addTiles(urlTemplate = mb_tiles2, 
+#         attribution = mb_attribution2, options = tileOptions( minZoom = 1,
+#     maxZoom = 8, format: 'png')) %>%
+# 		  addMarkers(lng = ~lon, lat = ~lat,  popup = ~as.character(popup))
+     paste0("swissinfo.ch | ", txt['source', lang], 'Tiles &copy; Esri')
+  
+    map <- leaflet(data = dd) %>% addTiles(urlTemplate = mb_tiles, 
+        attribution = mb_attribution) %>%
+		  addMarkers(lng = ~lon, lat = ~lat,  popup = ~as.character(popup), icon = carIcon) %>%
+      fitBounds(-111, 50, 150, -33) %>%  
+      addLegend(position = "topright", title = txt['title', lang], 
+        opacity = 0.2, colors = NULL, labels = NULL) %>%
+      	setView(-10, 50, zoom = 4)
+    
+    saveWidget(map, file = output.html, selfcontained = FALSE, libdir = "leafletjs")
+  }
+	
+```
+
